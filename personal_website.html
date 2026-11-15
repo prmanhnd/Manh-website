@@ -3,34 +3,464 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Trang cá nhân của tôi</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Mạnh, Chuyên gia Đào tạo và Giám đốc Trung tâm Đào tạo KienlongBank. Xây dựng năng lực đội ngũ để chiến lược đi tới kết quả kinh doanh.">
+  <title>Mạnh | Chuyên gia Đào tạo, KienlongBank</title>
   <style>
+    :root {
+      color-scheme: light dark;
+
+      --paper: light-dark(oklch(0.985 0.008 75), oklch(0.11 0.008 245));
+      --surface: light-dark(oklch(0.96 0.010 75), oklch(0.16 0.010 245));
+      --ink: light-dark(oklch(0.24 0.035 255), oklch(0.94 0.008 75));
+      --ink-soft: light-dark(oklch(0.44 0.025 255), oklch(0.74 0.012 245));
+      --rule: light-dark(oklch(0.87 0.012 75), oklch(0.28 0.012 245));
+      --accent: light-dark(oklch(0.50 0.13 45), oklch(0.76 0.12 60));
+      --on-accent: light-dark(oklch(0.985 0.008 75), oklch(0.16 0.010 245));
+
+      --measure: 62ch;
+      --gutter: clamp(16px, 5vw, 56px);
+      --page: 1120px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 72px;
+      -webkit-text-size-adjust: 100%;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      padding: 40px;
-      text-align: center;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: var(--ink);
+      background-color: var(--paper);
+      overflow-x: clip;
     }
-    .card {
-      background-color: #fff;
-      border-radius: 10px;
-      padding: 30px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+    h1, h2, h3, p, ol, ul, dl, dd { margin: 0; }
+    ol, ul { padding: 0; list-style: none; }
+
+    h1, h2, h3 {
+      line-height: 1.12;
+      letter-spacing: -0.015em;
+      text-wrap: balance;
+    }
+
+    p { text-wrap: pretty; }
+
+    a { color: inherit; }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    .wrap {
+      width: min(100% - 2 * var(--gutter), var(--page));
+      margin-inline: auto;
+    }
+
+    .skip {
+      position: fixed;
+      inset-block-start: 8px;
+      inset-inline-start: 8px;
+      z-index: 20;
+      padding: 10px 16px;
+      background-color: var(--ink);
+      color: var(--paper);
+      text-decoration: none;
+      transform: translateY(-200%);
+    }
+    .skip:focus { transform: none; }
+
+    /* Thanh điều hướng */
+    .site-header {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 10;
+      background-color: var(--paper);
+      border-block-end: 1px solid var(--rule);
+    }
+    .site-header .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 60px;
+    }
+    .brand {
+      font-weight: 700;
+      font-size: 1.125rem;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav ul {
+      display: flex;
+      gap: clamp(14px, 3vw, 32px);
+    }
+    .nav a {
       display: inline-block;
+      padding-block: 8px;
+      font-size: 0.9375rem;
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-block-end: 2px solid transparent;
     }
-    h1 {
-      color: #333;
+    .nav a:hover { color: var(--ink); border-block-end-color: var(--accent); }
+
+    /* Hero: các lớp xếp chồng bằng CSS Grid */
+    .hero {
+      display: grid;
+      grid-template-areas: "hero";
+      min-height: calc(100dvh - 61px);
+      border-block-end: 1px solid var(--rule);
     }
-    p {
-      color: #555;
+    .hero > * { grid-area: hero; }
+
+    .hero-lines {
+      background-image:
+        linear-gradient(to right, var(--rule) 1px, transparent 1px);
+      background-size: calc(100% / 6) 100%;
+      opacity: 0.55;
+      mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+    }
+
+    .hero-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      align-items: center;
+      gap: clamp(32px, 6vw, 88px);
+      position: relative;
+      z-index: 1;
+      padding-block: clamp(48px, 9vh, 104px);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 7.2vw, 5.25rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.02;
+    }
+    .hero-lead {
+      max-width: 46ch;
+      margin-block-start: 28px;
+      font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+      color: var(--ink-soft);
+    }
+    .hero-lead strong { color: var(--ink); font-weight: 700; }
+
+    .cta {
+      display: inline-block;
+      margin-block-start: 36px;
+      padding: 15px 26px;
+      background-color: var(--accent);
+      color: var(--on-accent);
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: transform 160ms ease;
+    }
+    .cta:hover { transform: translateY(-2px); }
+
+    /* Chuỗi giá trị bên phải hero */
+    .chain {
+      border-inline-start: 2px solid var(--accent);
+      padding-inline-start: clamp(20px, 3vw, 32px);
+    }
+    .chain li {
+      position: relative;
+      padding-block: 18px;
+      font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+    }
+    .chain li + li { border-block-start: 1px solid var(--rule); }
+    .chain li::before {
+      content: "";
+      position: absolute;
+      inset-inline-start: calc(-1 * clamp(20px, 3vw, 32px) - 7px);
+      inset-block-start: calc(18px + 0.45em);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--accent);
+    }
+    .chain span {
+      display: block;
+      margin-block-start: 4px;
+      font-size: 0.9375rem;
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--ink-soft);
+    }
+
+    /* Các phần nội dung */
+    .section {
+      padding-block: clamp(64px, 10vw, 128px);
+      border-block-end: 1px solid var(--rule);
+    }
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+      gap: clamp(16px, 5vw, 72px);
+      align-items: end;
+      margin-block-end: clamp(36px, 6vw, 72px);
+    }
+    .section h2 {
+      font-size: clamp(1.875rem, 4.4vw, 3.125rem);
+      letter-spacing: -0.025em;
+    }
+    .section-head p {
+      max-width: var(--measure);
+      color: var(--ink-soft);
+    }
+
+    /* Bốn trọng tâm */
+    .focus li {
+      display: grid;
+      grid-template-columns: 3.5rem minmax(0, 1fr) minmax(0, 1.4fr);
+      gap: clamp(12px, 3vw, 40px);
+      align-items: baseline;
+      padding-block: clamp(22px, 3vw, 34px);
+      border-block-start: 1px solid var(--rule);
+    }
+    .focus li:last-child { border-block-end: 1px solid var(--rule); }
+    .focus .num {
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .focus h3 { font-size: clamp(1.25rem, 2.3vw, 1.625rem); }
+    .focus p { color: var(--ink-soft); }
+
+    /* Nguyên tắc làm việc */
+    .tinted { background-color: var(--surface); }
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(24px, 4vw, 56px);
+    }
+    .principles li {
+      padding-block-start: 20px;
+      border-block-start: 3px solid var(--ink);
+    }
+    .principles h3 {
+      font-size: 1.3125rem;
+      margin-block-end: 12px;
+    }
+    .principles p { color: var(--ink-soft); }
+
+    /* Kinh nghiệm và kiến thức */
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+      gap: clamp(32px, 5vw, 72px);
+    }
+    .split h3 {
+      font-size: 1.0625rem;
+      margin-block-end: 18px;
+      color: var(--ink-soft);
+      font-weight: 400;
+    }
+    .sectors li {
+      padding-block: 12px;
+      font-size: clamp(1.375rem, 2.6vw, 1.875rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      border-block-start: 1px solid var(--rule);
+    }
+    .domains {
+      columns: 2;
+      column-gap: clamp(24px, 4vw, 48px);
+    }
+    .domains li {
+      break-inside: avoid;
+      padding-block: 12px;
+      border-block-start: 1px solid var(--rule);
+    }
+
+    .site-footer {
+      padding-block: 36px;
+      font-size: 0.9375rem;
+      color: var(--ink-soft);
+    }
+    .site-footer .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .site-footer .year { font-variant-numeric: tabular-nums; }
+
+    /* Màn hình hẹp */
+    @media (max-width: 760px) {
+      .hero-body,
+      .section-head,
+      .split { grid-template-columns: minmax(0, 1fr); }
+      .section-head { align-items: start; }
+      .focus li { grid-template-columns: 2.5rem minmax(0, 1fr); }
+      .focus p { grid-column: 2; }
+      .principles { grid-template-columns: minmax(0, 1fr); }
+      .domains { columns: 1; }
+      .nav a { font-size: 0.875rem; }
+    }
+    @media (max-width: 420px) {
+      .brand { display: none; }
+      .site-header .wrap { justify-content: center; }
+    }
+
+    /* Hiệu ứng xuất hiện khi cuộn, chỉ khi người dùng không tắt chuyển động */
+    @media (prefers-reduced-motion: no-preference) {
+      @supports (animation-timeline: view()) {
+        .reveal {
+          animation: rise linear both;
+          animation-timeline: view();
+          animation-range: entry 0% cover 24%;
+        }
+      }
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .cta { transition: none; }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Xin chào, tôi là [Mạnh]</h1>
-    <p>Tôi đang học cách tạo website với AI. Đây là trang web đầu tiên của tôi!</p>
-    <p>💻✨🚀</p>
-  </div>
+  <a class="skip" href="#noi-dung">Đi tới nội dung chính</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="#dau-trang">Mạnh</a>
+      <nav class="nav" aria-label="Điều hướng chính">
+        <ul>
+          <li><a href="#chuyen-mon">Chuyên môn</a></li>
+          <li><a href="#cach-lam">Cách làm việc</a></li>
+          <li><a href="#kinh-nghiem">Kinh nghiệm</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="noi-dung">
+    <section class="hero" id="dau-trang" aria-labelledby="tieu-de-chinh">
+      <div class="hero-lines" aria-hidden="true"></div>
+      <div class="hero-body wrap">
+        <div>
+          <h1 id="tieu-de-chinh">Chiến lược thành năng lực thực thi</h1>
+          <p class="hero-lead">Tôi là <strong>Mạnh</strong>, Chuyên gia Đào tạo và Giám đốc Trung tâm Đào tạo KienlongBank. Tôi xây dựng năng lực đội ngũ để chiến lược đi tới kết quả kinh doanh đo được.</p>
+          <a class="cta" href="#chuyen-mon">Xem chuyên môn</a>
+        </div>
+        <ol class="chain" aria-label="Chuỗi giá trị của đào tạo">
+          <li>Chiến lược<span>Mục tiêu kinh doanh</span></li>
+          <li>Năng lực đội ngũ<span>Kiến thức, kỹ năng, hành vi</span></li>
+          <li>Kết quả kinh doanh<span>Triển khai được, đo lường được</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="chuyen-mon" aria-labelledby="tieu-de-chuyen-mon">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2 id="tieu-de-chuyen-mon">Bốn trọng tâm đào tạo</h2>
+          <p>Tại Trung tâm Đào tạo KienlongBank, tôi tập trung vào bốn mảng năng lực gắn trực tiếp với khách hàng và với hiệu quả kinh doanh của ngân hàng.</p>
+        </div>
+        <ol class="focus">
+          <li class="reveal">
+            <span class="num" aria-hidden="true">01</span>
+            <h3>Quản lý gia sản</h3>
+            <p>Phát triển đội ngũ tư vấn đủ năng lực đồng hành với khách hàng trong các quyết định tài chính dài hạn.</p>
+          </li>
+          <li class="reveal">
+            <span class="num" aria-hidden="true">02</span>
+            <h3>Trải nghiệm khách hàng</h3>
+            <p>Xây dựng, triển khai và tối ưu mô hình trải nghiệm khách hàng, đưa tiêu chuẩn dịch vụ thành hành vi hằng ngày tại điểm giao dịch.</p>
+          </li>
+          <li class="reveal">
+            <span class="num" aria-hidden="true">03</span>
+            <h3>Năng lực bán hàng</h3>
+            <p>Nâng năng lực tư vấn và bán hàng của đội ngũ kinh doanh, gắn nội dung đào tạo với chỉ tiêu và tình huống thực tế.</p>
+          </li>
+          <li class="reveal">
+            <span class="num" aria-hidden="true">04</span>
+            <h3>Cán bộ quản lý</h3>
+            <p>Phát triển năng lực lãnh đạo và quản lý cho đội ngũ cán bộ, từ quản trị hiệu suất tới dẫn dắt thay đổi.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section tinted" id="cach-lam" aria-labelledby="tieu-de-cach-lam">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2 id="tieu-de-cach-lam">Cách tôi làm việc</h2>
+          <p>Mọi đề xuất phải trả lời được hai câu hỏi: triển khai thành công trong thực tế bằng cách nào, và tạo ra giá trị gì cho tổ chức.</p>
+        </div>
+        <ul class="principles">
+          <li class="reveal">
+            <h3>Thực tiễn trước lý thuyết</h3>
+            <p>Ưu tiên giải pháp ứng dụng được ngay và đã được kiểm chứng, thay vì chạy theo xu hướng quản trị thiếu cơ sở.</p>
+          </li>
+          <li class="reveal">
+            <h3>Lập luận dựa trên bằng chứng</h3>
+            <p>Kết luận phải có dữ liệu, mô hình đã kiểm chứng hoặc kinh nghiệm triển khai đứng sau, không dựa vào cảm tính.</p>
+          </li>
+          <li class="reveal">
+            <h3>Giá trị cho ba bên</h3>
+            <p>Nhìn mọi vấn đề từ giá trị tạo ra cho khách hàng, cho nhân viên và cho tổ chức.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="kinh-nghiem" aria-labelledby="tieu-de-kinh-nghiem">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2 id="tieu-de-kinh-nghiem">Kinh nghiệm và kiến thức</h2>
+          <p>Nhiều năm làm việc trong bốn ngành, tham gia xây dựng năng lực đội ngũ, phát triển lãnh đạo và các chương trình chuyển đổi tổ chức.</p>
+        </div>
+        <div class="split">
+          <div class="reveal">
+            <h3>Ngành đã làm việc</h3>
+            <ul class="sectors">
+              <li>Tài chính</li>
+              <li>Ngân hàng</li>
+              <li>Bán lẻ</li>
+              <li>Ô tô</li>
+            </ul>
+          </div>
+          <div class="reveal">
+            <h3>Lĩnh vực kiến thức chuyên sâu</h3>
+            <ul class="domains">
+              <li>Đào tạo và phát triển nguồn nhân lực</li>
+              <li>Quản trị ngân hàng và tài chính</li>
+              <li>Quản trị kinh doanh và bán lẻ</li>
+              <li>Quản trị trải nghiệm khách hàng</li>
+              <li>Văn hóa và phát triển tổ chức</li>
+              <li>Phát triển năng lực lãnh đạo, quản lý</li>
+              <li>Hệ thống đào tạo doanh nghiệp</li>
+              <li>Chuyển đổi năng lực, nâng cao hiệu suất</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Mạnh, Chuyên gia Đào tạo</span>
+      <span class="year">2026</span>
+    </div>
+  </footer>
 </body>
 </html>
